@@ -5,47 +5,47 @@ const connection = (req, res) => {
     res.send('Hello')
 }
 
-// const isLoggedIn = (req, res, next) => {
-//     if (!token) {
-//         res.send({ mes: 'Token Missing' })
-//     }
-//     else {
-//         jwt.verify(token, process.env.JWT_SECRETKEY, (err, decoded) => {
-//             if (err) {
-//                 res.send({ mes: 'Error with token' })
-//             }
-//             else {
-//                 next();
-//                 // console.log(decoded);
-//             }
-//         })
-//     }
-// }
+const isLoggedIn = (req, res, next) => {
+    if (!token) {
+        res.send({ mes: 'Token Missing' })
+    }
+    else {
+        jwt.verify(token, process.env.JWT_SECRETKEY, (err, decoded) => {
+            if (err) {
+                res.send({ mes: 'Error with token' })
+            }
+            else {
+                next();
+                // console.log(decoded);
+            }
+        })
+    }
+}
 const login = async (req, res) => {
     let { email, password } = req.body
     try {
         res.send({email:email})
-        const user = await UserModel.findOne({ email: email })
-        return;
-        if (user) {
-            if (user.password == password) {
-                const tokenData = {
-                    email: user.email,
-                    id: user._id
-                }
-                const token = jwt.sign(tokenData, process.env.JWT_SECRETKEY,{
-                    expiresIn:'1d'
-                });
-                res.send({ mes: 'Login Successfully', token })
-            }
-            else {
-                res.send({ mes: 'Wrong Password' })
+        // const user = await UserModel.findOne({ email: email })
+        // return;
+        // if (user) {
+        //     if (user.password == password) {
+        //         const tokenData = {
+        //             email: user.email,
+        //             id: user._id
+        //         }
+        //         const token = jwt.sign(tokenData, process.env.JWT_SECRETKEY,{
+        //             expiresIn:'1d'
+        //         });
+        //         res.send({ mes: 'Login Successfully', token })
+        //     }
+        //     else {
+        //         res.send({ mes: 'Wrong Password' })
 
-            }
-        }
-        else {
-            res.send({ mes: 'Account Not Exists' });
-        }
+        //     }
+        // }
+        // else {
+        //     res.send({ mes: 'Account Not Exists' });
+        // }
     } catch (error) {
         console.log(error);
     }
