@@ -2,7 +2,6 @@ var jwt = require('jsonwebtoken');
 const UserModel = require('../models/userSchema.js')
 
 const connection = (req, res) => {
-    const user = await UserModel.find()
     res.send('Hello')
 }
 
