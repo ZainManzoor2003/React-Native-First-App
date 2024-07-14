@@ -25,27 +25,27 @@ const login = async (req, res) => {
     let { email, password } = req.body
     try {
         res.send({email:email})
-        // const user = await UserModel.findOne({ email: email })
-        // return;
-        // if (user) {
-        //     if (user.password == password) {
-        //         const tokenData = {
-        //             email: user.email,
-        //             id: user._id
-        //         }
-        //         const token = jwt.sign(tokenData, process.env.JWT_SECRETKEY,{
-        //             expiresIn:'1d'
-        //         });
-        //         res.send({ mes: 'Login Successfully', token })
-        //     }
-        //     else {
-        //         res.send({ mes: 'Wrong Password' })
+        const user = await UserModel.findOne({ email: email })
+        return;
+        if (user) {
+            if (user.password == password) {
+                const tokenData = {
+                    email: user.email,
+                    id: user._id
+                }
+                const token = jwt.sign(tokenData, process.env.JWT_SECRETKEY,{
+                    expiresIn:'1d'
+                });
+                res.send({ mes: 'Login Successfully', token })
+            }
+            else {
+                res.send({ mes: 'Wrong Password' })
 
-        //     }
-        // }
-        // else {
-        //     res.send({ mes: 'Account Not Exists' });
-        // }
+            }
+        }
+        else {
+            res.send({ mes: 'Account Not Exists' });
+        }
     } catch (error) {
         console.log(error);
     }
