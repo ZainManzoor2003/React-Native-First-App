@@ -5,22 +5,22 @@ const connection = (req, res) => {
     res.send('Hello')
 }
 
-const isLoggedIn = (req, res, next) => {
-    if (!token) {
-        res.send({ mes: 'Token Missing' })
-    }
-    else {
-        jwt.verify(token, process.env.JWT_SECRETKEY, (err, decoded) => {
-            if (err) {
-                res.send({ mes: 'Error with token' })
-            }
-            else {
-                next();
-                // console.log(decoded);
-            }
-        })
-    }
-}
+// const isLoggedIn = (req, res, next) => {
+//     if (!token) {
+//         res.send({ mes: 'Token Missing' })
+//     }
+//     else {
+//         jwt.verify(token, process.env.JWT_SECRETKEY, (err, decoded) => {
+//             if (err) {
+//                 res.send({ mes: 'Error with token' })
+//             }
+//             else {
+//                 next();
+//                 // console.log(decoded);
+//             }
+//         })
+//     }
+// }
 const login = async (req, res) => {
     let { email, password } = req.body
     try {
