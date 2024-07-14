@@ -23,31 +23,32 @@ const isLoggedIn = (req, res, next) => {
 }
 const login = async (req, res) => {
     let { email, password } = req.body
-    res.send({email:email,password:password})
-    // try {
-    //     const user = await UserModel.findOne({ email: email })
-    //     if (user) {
-    //         if (user.password == password) {
-    //             const tokenData = {
-    //                 email: user.email,
-    //                 id: user._id
-    //             }
-    //             const token = jwt.sign(tokenData, process.env.JWT_SECRETKEY,{
-    //                 expiresIn:'1d'
-    //             });
-    //             res.send({ mes: 'Login Successfully', token })
-    //         }
-    //         else {
-    //             res.send({ mes: 'Wrong Password' })
+    try {
+        const user = await UserModel.findOne({ email: email })
+        res.send({user:user})
+        return;
+        if (user) {
+            if (user.password == password) {
+                const tokenData = {
+                    email: user.email,
+                    id: user._id
+                }
+                const token = jwt.sign(tokenData, process.env.JWT_SECRETKEY,{
+                    expiresIn:'1d'
+                });
+                res.send({ mes: 'Login Successfully', token })
+            }
+            else {
+                res.send({ mes: 'Wrong Password' })
 
-    //         }
-    //     }
-    //     else {
-    //         res.send({ mes: 'Account Not Exists' });
-    //     }
-    // } catch (error) {
-    //     console.log(error);
-    // }
+            }
+        }
+        else {
+            res.send({ mes: 'Account Not Exists' });
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 const register = async (req, res) => {
     let { name, email, password } = req.body
