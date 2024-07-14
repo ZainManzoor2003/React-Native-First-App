@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connection = async () => {
     try {
-        await mongoose.connect('mongodb+srv://zainmanzoor2003:react-native-first-app123@react-native-first-app.d3vxvgp.mongodb.net/').then(() => {
+        await mongoose.connect(process.env.MONGOOSE_URL).then(() => {
             console.log('Database Connected Successfully');
         })
     } catch (error) {
