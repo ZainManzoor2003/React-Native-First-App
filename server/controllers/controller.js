@@ -23,6 +23,7 @@ const isLoggedIn = (req, res, next) => {
 }
 const login = async (req, res) => {
     let { email, password } = req.body
+    res.send({email})
     return
     try {
         const user = await UserModel.findOne({ email: email })
