@@ -24,7 +24,7 @@ const isLoggedIn = (req, res, next) => {
 const login = async (req, res) => {
     let { email, password } = req.body
     try {
-        const user = await UserModel.findOne({ email: email })
+        const user = await UserModel.find({ email: email })
         res.send({user:user})
         return;
         if (user) {
